@@ -17,29 +17,32 @@ func main() {
 	}
 
 	go handler.StartServer()
-	if client.SaveHumanByPOSTRequest(h.ForSendJSON()){
+	//Try to save human
+	if client.SaveHumanByPOSTRequest(h.ForSendJSON()) {
 		fmt.Println("created human")
 	}
 	time.Sleep(time.Second * 2)
+	//Try to get human
 	if h1, ok := client.ReadHumanByGetRequest(h.FirstName); ok {
-		fmt.Println("readed human is - ",*h1)
+		fmt.Println("readed human is - ", *h1)
 	}
 	time.Sleep(time.Second * 2)
-	h.Age="35"
+	//Try to update
+	h.Age = "35"
 	switch client.UpdateByPUTRequest(h.ForSendJSON()) {
 	case http.StatusCreated:
-		fmt.Println("human exist " )
+		fmt.Println("human exist ")
 	case http.StatusOK:
-		fmt.Println("human was updated " )
+		fmt.Println("human was updated ")
 	case http.StatusNoContent:
-		fmt.Println("human was't updated " )
+		fmt.Println("human was't updated ")
 	}
+	//Try to delete
 	switch client.DeleteHumanByRequest(h.FirstName) {
 	case http.StatusOK:
-		fmt.Println("human was updated " )
+		fmt.Println("human was updated ")
 	case http.StatusNoContent:
-		fmt.Println("human was't updated " )
+		fmt.Println("human was't updated ")
 	}
-
 
 }
