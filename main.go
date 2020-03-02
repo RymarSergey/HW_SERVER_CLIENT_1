@@ -2,8 +2,8 @@ package main
 
 import (
 	"awesomeProject1/client"
-	"awesomeProject1/server/handler"
 	"awesomeProject1/server/model"
+	"awesomeProject1/serverGin"
 	"fmt"
 	"net/http"
 	"time"
@@ -16,7 +16,7 @@ func main() {
 		Age:        "34",
 	}
 
-	go handler.StartServer()
+	go serverGin.StartServer() //handler.StartServer()
 	//Try to save human
 	if client.SaveHumanByPOSTRequest(h.ForSendJSON()) {
 		fmt.Println("created human")
@@ -40,9 +40,9 @@ func main() {
 	//Try to delete
 	switch client.DeleteHumanByRequest(h.FirstName) {
 	case http.StatusOK:
-		fmt.Println("human was updated ")
+		fmt.Println("human was Deleted ")
 	case http.StatusNoContent:
-		fmt.Println("human was't updated ")
+		fmt.Println("human was't Deleted ")
 	}
 
 }

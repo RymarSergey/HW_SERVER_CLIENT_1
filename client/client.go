@@ -24,6 +24,7 @@ func SaveHumanByPOSTRequest(humanJSONString string) bool {
 	if err != nil {
 		log.Fatal("Error reading response. ", err)
 	}
+	resp.Body.Close()
 
 	return resp.StatusCode == http.StatusCreated
 }
@@ -63,6 +64,7 @@ func UpdateByPUTRequest(humanJSONString string) int {
 	if err != nil {
 		log.Fatal("Error reading response. ", err)
 	}
+	resp.Body.Close()
 	return resp.StatusCode
 }
 func DeleteHumanByRequest(humanName string) int {
@@ -76,5 +78,6 @@ func DeleteHumanByRequest(humanName string) int {
 	if err != nil {
 		log.Fatal("Error reading response. ", err)
 	}
+	resp.Body.Close()
 	return resp.StatusCode
 }
