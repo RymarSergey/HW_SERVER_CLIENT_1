@@ -16,7 +16,7 @@ func SaveHumanByPOSTRequest(humanJSONString string) bool {
 		log.Fatal("Error reading request. ", err)
 	}
 
-	//req.Header.Set("Cache-Control", "no-cache")
+	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{Timeout: time.Second * 10}
 
@@ -24,6 +24,7 @@ func SaveHumanByPOSTRequest(humanJSONString string) bool {
 	if err != nil {
 		log.Fatal("Error reading response. ", err)
 	}
+
 	return resp.StatusCode == http.StatusCreated
 }
 func ReadHumanByGetRequest(humanName string) (*model.Human, bool) {
@@ -55,7 +56,7 @@ func UpdateByPUTRequest(humanJSONString string) int {
 	if err != nil {
 		log.Fatal("Error reading request. ", err)
 	}
-
+	req.Header.Set("Content-Type", "application/json")
 	client := &http.Client{Timeout: time.Second * 10}
 
 	resp, err := client.Do(req)
@@ -64,7 +65,7 @@ func UpdateByPUTRequest(humanJSONString string) int {
 	}
 	return resp.StatusCode
 }
-func DeleteHumanByRequest(humanName string) (int) {
+func DeleteHumanByRequest(humanName string) int {
 	queryString := "http://localhost:8080?first_name=" + humanName
 	req, err := http.NewRequest("DELETE", queryString, nil)
 	if err != nil {
